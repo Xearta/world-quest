@@ -1,42 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
-public class Spell : MonoBehaviour
+[Serializable]
+public class Spell
 {
-    private Rigidbody2D rb;
+    [SerializeField]
+    private string name;
+
+    [SerializeField]
+    private int damage;
+
+    [SerializeField]
+    private Sprite icon;
 
     [SerializeField]
     private float speed;
 
-    public Transform MyTarget { get; set; }
+    [SerializeField]
+    private float castTime;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        rb = GetComponent<Rigidbody2D>();
-    }
+    [SerializeField]
+    private GameObject spellPrefab;
 
-    private void FixedUpdate()
-    {
-        if (MyTarget != null)
-        {
-            Vector2 direction = MyTarget.position - transform.position;
-            rb.velocity = direction.normalized * speed;
+    [SerializeField]
+    private Color barColor;
 
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
-            transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision) 
-    {
-        if (collision.tag == "HitBox" && collision.transform == MyTarget)
-        {
-            GetComponent<Animator>().SetTrigger("Impact");
-            rb.velocity = Vector2.zero;
-            MyTarget = null;
-        }
-    }
+    public string MyName { get => name; }
+    public int MyDamage { get => damage; }
+    public Sprite MyIcon { get => icon; }
+    public float MySpeed { get => speed; }
+    public float MyCastTime { get => castTime;  }
+    public GameObject MySpellPrefab { get => spellPrefab; }
+    public Color MyBarColor { get => barColor;  }
 }

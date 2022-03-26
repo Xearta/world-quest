@@ -70,7 +70,7 @@ public abstract class Character : MonoBehaviour
         }
     }
 
-    public void StopAttack()
+    public virtual void StopAttack()
     {
         if (attackRoutine != null)
         {
