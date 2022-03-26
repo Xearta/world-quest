@@ -31,7 +31,7 @@ public class Player : Character
     private void GetInput()
     {   
 
-        //! TESTING ONLY
+        //! ===TESTING ONLY===
         if (Input.GetKeyDown(KeyCode.I))
         {
             health.MyCurrentValue -= 10;
@@ -43,9 +43,12 @@ public class Player : Character
             mana.MyCurrentValue += 10;
         }
 
+        //! ===END OF TESTING===
+
 
         direction = Vector2.zero;
 
+        // Movement
         if (Input.GetKey(KeyCode.W))
         {
             direction += Vector2.up;
@@ -61,6 +64,25 @@ public class Player : Character
         if (Input.GetKey(KeyCode.D))
         {
             direction += Vector2.right;
+        }
+
+        // Attack
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            attackRoutine = StartCoroutine(Attack());
+        }
+    }
+
+    private IEnumerator Attack()
+    {
+        if (!isAttacking && !isMoving)
+        {
+            isAttacking = true;
+            animator.SetBool("isAttacking", true);
+            yield return new WaitForSeconds(3); //! Hard-coded cast time for testing
+
+            StopAttack();
+            Debug.Log("Done casting");
         }
     }
 }
