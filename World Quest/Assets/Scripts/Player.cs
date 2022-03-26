@@ -5,12 +5,8 @@ using UnityEngine;
 public class Player : Character
 {
     [SerializeField]
-    private Stat health;
-
-    [SerializeField]
     private Stat mana;
 
-    private float initHealth = 100;
     private float initMana = 50;
 
     [SerializeField]
@@ -29,11 +25,7 @@ public class Player : Character
     protected override void Start()
     {
         spellBook = GetComponent<SpellBook>();
-        health.Initialize(initHealth, initHealth);
         mana.Initialize(initMana, initMana);
-
-        //TODO Just for testing
-        MyTarget = GameObject.Find("Target").transform;
 
         base.Start();
     }
@@ -91,15 +83,21 @@ public class Player : Character
 
     private IEnumerator Attack(int spellIndex)
     {
+        Transform currentTarget = MyTarget;
+
+
         Spell newSpell = spellBook.CastSpell(spellIndex);
 
         isAttacking = true;
         animator.SetBool("isAttacking", true);
         yield return new WaitForSeconds(newSpell.MyCastTime);
 
-        SpellScript s = Instantiate(newSpell.MySpellPrefab, exitPoints[exitIndex].position, Quaternion.identity).GetComponent<SpellScript>();
+        if (currentTarget != null && InLineOfSight())
+        {
+            SpellScript s = Instantiate(newSpell.MySpellPrefab, exitPoints[exitIndex].position, Quaternion.identity).GetComponent<SpellScript>();
 
-        s.MyTarget = MyTarget;
+            s.Initialize(currentTarget, newSpell.MyDamage);
+        }
 
         StopAttack();
     }
@@ -114,16 +112,21 @@ public class Player : Character
 
     private bool InLineOfSight()
     {
-        Vector3 targetDirection = (MyTarget.transform.position - transform.position);
-
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, targetDirection, Vector2.Distance(transform.position, MyTarget.transform.position), 256);
-
-        if (hit.collider == null)
+        if (MyTarget != null)
         {
-            return true;
+            Vector3 targetDirection = (MyTarget.transform.position - transform.position);
+
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, targetDirection, Vector2.Distance(transform.position, MyTarget.transform.position), 256);
+
+            if (hit.collider == null)
+            {
+                return true;
+            }
         }
 
         return false;
+
+        
     }
 
     private void Block()
