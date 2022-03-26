@@ -37,9 +37,13 @@ public class GameManager : MonoBehaviour
 
                 currentTarget = hit.collider.GetComponent<NPC>();
                 player.MyTarget = currentTarget.Select();
+
+                UIManager.MyInstance.ShowTargetFrame(currentTarget);
             }
             else
             {
+                UIManager.MyInstance.HideTargetFrame();
+                
                 if (currentTarget != null)
                 {
                     currentTarget.Deselect();
@@ -48,13 +52,6 @@ public class GameManager : MonoBehaviour
                 currentTarget = null;
                 player.MyTarget = null;
             }
-            //     if (hit.collider.tag == "Enemy")
-            //         player.MyTarget = hit.transform.GetChild(0);
-            // }
-            // else
-            // {
-            //     player.MyTarget = null;
-            // }
         }
     }
 }
