@@ -24,7 +24,7 @@ public class Player : Character
 
     private int exitIndex = 2;
 
-    private Transform target;
+    public Transform MyTarget { get; set; }
 
     // Start is called before the first frame update
     protected override void Start()
@@ -33,7 +33,7 @@ public class Player : Character
         mana.Initialize(initMana, initMana);
 
         //TODO Just for testing
-        target = GameObject.Find("Target").transform;
+        MyTarget = GameObject.Find("Target").transform;
 
         base.Start();
     }
@@ -87,40 +87,34 @@ public class Player : Character
             exitIndex = 1;
             direction += Vector2.right;
         }
-
-        // Attack
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Block();
-
-            if (!isAttacking && !isMoving && InLineOfSight())
-                attackRoutine = StartCoroutine(Attack());
-        }
     }
 
-    private IEnumerator Attack()
+    private IEnumerator Attack(int spellIndex)
     {
         isAttacking = true;
         animator.SetBool("isAttacking", true);
         yield return new WaitForSeconds(1); //TODO Hard-coded cast time for testing
 
-        CastSpell();
+        Spell s = Instantiate(spellPrefabs[spellIndex], exitPoints[exitIndex].position, Quaternion.identity).GetComponent<Spell>();
+
+        s.MyTarget = MyTarget;
 
         StopAttack();
-        Debug.Log("Done casting");
     }
 
-    public void CastSpell()
+    public void CastSpell(int spellIndex)
     {
-        Instantiate(spellPrefabs[0], exitPoints[exitIndex].position, Quaternion.identity);
+         Block();
+
+        if (MyTarget != null && !isAttacking && !isMoving && InLineOfSight())
+            attackRoutine = StartCoroutine(Attack(spellIndex));
     }
 
     private bool InLineOfSight()
     {
-        Vector3 targetDirection = (target.transform.position - transform.position);
+        Vector3 targetDirection = (MyTarget.transform.position - transform.position);
 
-        Debug.DrawRay(transform.position, targetDirection, Color.red);
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, targetDirection, Vector2.Distance(transform.position, target.transform.position), 256);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, targetDirection, Vector2.Distance(transform.position, MyTarget.transform.position), 256);
 
         if (hit.collider == null)
         {

@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 5404146279164329639}
   - component: {fileID: -3824930890118596656}
   - component: {fileID: 5756187178540076341}
-  - component: {fileID: 4287845722615563227}
-  - component: {fileID: 8086495526566894972}
+  - component: {fileID: 9119576656857989325}
+  - component: {fileID: -1785826580001778201}
   m_Layer: 0
-  m_Name: FirePrefab
+  m_Name: FrostPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -75,12 +75,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: b3ecda55c099f45bd904fc3a04191ba3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ccb6d64eee2fd44498b4ff11e805411a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.148, y: 0.292}
+  m_Size: {x: 1.1, y: 2.85}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -120,7 +120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
---- !u!95 &4287845722615563227
+--- !u!95 &9119576656857989325
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 0
@@ -139,7 +139,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!61 &8086495526566894972
+--- !u!61 &-1785826580001778201
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -152,16 +152,16 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.08, y: 0}
+  m_Offset: {x: -0.12, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.292, y: 0.148}
-    newSize: {x: 0.148, y: 0.292}
+    oldSize: {x: 0.57, y: 0.22}
+    newSize: {x: 1.1, y: 2.85}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.12, y: 0.12}
+  m_Size: {x: 0.19, y: 0.22}
   m_EdgeRadius: 0
