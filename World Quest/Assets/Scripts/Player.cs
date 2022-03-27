@@ -19,6 +19,8 @@ public class Player : Character
 
     private SpellBook spellBook;
 
+    private Vector3 min, max;
+
     public Transform MyTarget { get; set; }
 
     // Start is called before the first frame update
@@ -34,6 +36,10 @@ public class Player : Character
     protected override void Update()
     {
         GetInput();
+
+        transform.position = new Vector3(Mathf.Clamp(transform.position.x, min.x, max.x), 
+            Mathf.Clamp(transform.position.y, min.y, max.y), transform.position.z);
+
         base.Update();  // Execute the Character.cs Update function
     }
 
@@ -79,6 +85,12 @@ public class Player : Character
             exitIndex = 1;
             direction += Vector2.right;
         }
+    }
+
+    public void SetLimits(Vector3 min, Vector3 max)
+    {
+        this.min = min;
+        this.max = max;
     }
 
     private IEnumerator Attack(int spellIndex)
